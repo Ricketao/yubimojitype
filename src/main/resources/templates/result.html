@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title th:text="${title}"></title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body id="results">
+    <header>
+        <h1 th:text="${title}"></h1>    
+    </header>
+    
+	<p class="red" th:text="${correct}"></p>
+	<p class="red" th:text="${score}"></p>
+	<div id="resultbuttons">
+		<a class="button" th:href="@{/entry}">もう一度挑戦する</a> <a class="button"
+			th:href="@{/}">メニューに戻る</a><br />
+	</div>
+	<table class="result">
+
+		<tr>
+			<th>問題</th>
+			<th>解答</th>
+			<th>あなたの解答</th>
+			<th>結果</th>
+		</tr>
+		<tr th:each="answer:${answerList}">
+			<td><video th:src="@{${answer.address}}" controls muted></video></td>
+			<td>
+				<ul>
+					<li class="answer" th:text="${answer.name}"><li class="answer" th:text="${answer.yomi}">
+				</li></ul>
+			</td>
+			<td class="input" th:text="${answer.input}"></td>
+			<td class="correct" th:text="${answer.correct}"></td>
+		</tr>
+	</table>
+
+	<br />
+	<div id="resultbuttons">
+		<a class="button" th:href="@{/entry}">もう一度挑戦する</a> <a class="button"
+			th:href="@{/}">メニューに戻る</a><br />
+	</div>
+	
+	<audio id="sound-e" preload="auto">
+		<source src="sounds/ホイッスル・連続.mp3" type="audio/mp3">
+	</audio>
+	
+	<footer>
+		<p>&copy; Well-being Gadget Laboratory</p>
+	</footer>
+	
+	 <script type="text/javascript" th:inline="javascript">
+	 /*<![CDATA[*/
+    let en = document.getElementById("sound-e");
+    let music = /*[[${musicOtn}]]*/
+    /*]]>*/
+	    window.onload = function() {
+	    	
+	    	if (music == true){
+	    		en.muted = false;
+	    	} else {
+	    		en.muted = true;
+	    	}
+	    	document.getElementById("sound-e").play();
+		}
+	</script>
+
+</body>
+</html>

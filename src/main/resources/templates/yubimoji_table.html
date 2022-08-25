@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title th:text="${title}"></title>
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script type="text/javascript" th:src="@{/js/yubimoji_table.js}"></script>
+</head>
+
+<body id="yubimoji-table">
+	<header>
+		<h1 th:text="${title}">指文字表</h1>
+	</header>
+	<table class="yubimoji" border="1">
+		<tr>
+			<td id="fs-a"><span class="fs-letter">あ</span>
+				<video class="fs-video" th:src="@{/images/1moji/a.mp4}" autoplay></video>
+			</td>
+			<td id="fs-ii">い</td>
+			<td id="fs-u">う</td>
+			<td id="fs-ee">え</td>
+			<td id="fs-o">お</td>
+		</tr>
+		<tr>
+			<td id="fs-ka">か</td>
+			<td id="fs-ki">き</td>
+			<td id="fs-ku">く</td>
+			<td id="fs-ke">け</td>
+			<td id="fs-ko">こ</td>
+		</tr>
+		<tr>
+			<td id="fs-sa">さ</td>
+			<td id="fs-si">し</td>
+			<td id="fs-su">す</td>
+			<td id="fs-se">せ</td>
+			<td id="fs-so">そ</td>
+		</tr>
+		<tr>
+			<td id="fs-ta">た</td>
+			<td id="fs-ti">ち</td>
+			<td id="fs-tu">つ</td>
+			<td id="fs-te">て</td>
+			<td id="fs-to">と</td>
+		</tr>
+		<tr>
+			<td id="fs-na">な</td>
+			<td id="fs-ni">に</td>
+			<td id="fs-nu">ぬ</td>
+			<td id="fs-ne">ね</td>
+			<td id="fs-no">の</td>
+		</tr>
+		<tr>
+			<td id="fs-ha">は</td>
+			<td id="fs-hi">ひ</td>
+			<td id="fs-hu">ふ</td>
+			<td id="fs-he">へ</td>
+			<td id="fs-ho">ほ</td>
+		</tr>
+		<tr>
+			<td id="fs-ma">ま</td>
+			<td id="fs-mi">み</td>
+			<td id="fs-mu">む</td>
+			<td id="fs-me">め</td>
+			<td id="fs-mo">も</td>
+		</tr>
+		<tr>
+			<td id="fs-ya">や</td>
+			<td id="" class="empty"></td>
+			<td id="fs-yu">ゆ</td>
+			<td id="" class="empty"></td>
+			<td id="fs-yo">よ</td>
+		</tr>
+		<tr>
+			<td id="fs-ra">ら</td>
+			<td id="fs-ri">り</td>
+			<td id="fs-ru">る</td>
+			<td id="fs-re">れ</td>
+			<td id="fs-ro">ろ</td>
+		</tr>
+		<tr>
+			<td id="fs-wa">わ</td>
+			<td id="fs-wo">を</td>
+			<td id="fs-n">ん</td>
+			<td id="" class="empty"></td>
+			<td id="" class="empty"></td>
+		</tr>
+		<tr>
+			<td id="fs-gagigugego">゛(濁 音)</td>
+			<td id="fs-papipupepo">゜(半濁音)</td>
+			<td id="fs-lyalyulyo">ゃ(拗 音)</td>
+			<td id="fs-ltsu">っ(促 音)</td>
+			<td id="fs-bou">ー(長 音)</td>
+		</tr>
+	</table>
+	<a class="button" th:href="@{/}">メニューに戻る</a>
+	<footer>
+		<p>&copy; Well-being Gadget Laboratory</p>
+	</footer>
+
+</body>
+
+</html>

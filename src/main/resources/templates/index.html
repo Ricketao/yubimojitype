@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title th:text="${title}"></title>
+<link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+</head>
+<body id="title">
+	<header>
+		<i lang="ja"><h1 id="title-text" th:text="${title}"></h1></i>
+	</header>
+	<div class="wrapper grid">
+        <!--div id="syokyu-btn" class="item title-btn" -->
+        <a class="item title-btn" th:href="@{/entry}"><span class="menu-text">初級</span></a>
+        <!-- !-- /div -->
+        <!-- div id="asobikata-btn" class="item title-btn" -->
+        <a class="item title-btn" th:href="@{/rule}"><span class="menu-text">遊び方</span></a>
+        <!-- /div -->
+        <!-- div id="zyokyu-btn" class="item title-btn"-->
+        <a class="item title-btn" th:href="@{/advanced}"><span class="menu-text">上級</span></a>
+        <!-- /div -->
+        <!-- div id="yubimojihyou-btn" class="item title-btn" -->
+        <a class="item title-btn" th:href="@{/yubimoji_table}"><span class="menu-text">指文字表</span></a>
+        <!-- /div -->
+    </div>
+	
+	<footer>
+		<p>&copy; Well-being Gadget Laboratory</p>
+	</footer>
+</body>
+</html>

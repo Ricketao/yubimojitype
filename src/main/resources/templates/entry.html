@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title th:text="${title}"></title>
+<link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+	<header>
+		<h1 id="title-text" th:text="${title}"></h1>
+	</header>
+
+	<script type="text/javascript" th:inline="javascript">
+		document.addEventListener("keydown", ready, true);
+		let questionArray; //出題する問題のリスト
+		window.onload = function() {
+			/*<![CDATA[*/
+			questionArray = /*[[${questionList}]]*/
+			console.log(questionArray);
+			/*]]>*/
+		}
+
+		let correctArray = new Array(); //○か×か格納
+		let inputArray = new Array(); //入力された語句を保存
+
+		let time = 90; //remainingに値を受け渡す
+		let remaining; //全体の制限時間
+		let readyTime = 3; //始まる直前のカウントダウン
+		let readyTimer; // タイマーID保存用
+		let setTimer; // タイマーID保存用
+		let partTime = 0; //1問あたりの制限時間
+		let addTime = 0; //正解時の追加時間
+		let score = 0; //スコア
+		let correct; //正解数
+		let num = 0; //何問目か
+		let gameTimer; //全体時間
+		let partTimer; //問題個別時間
+		let movTime = 0; //1回あたりの動画再生時間
+		let maxPartTime = 0;//1問あたりの制限時間の初期値
+		let firstFlg = true;
+		let input; //入力フォーム
+		let bgmCheck=true; //BGM設定
+		
+		//始まる直前
+		function ready() {
+			if (!firstFlg) {
+				return;
+			}
+			firstFlg = false;
+			let startcount = document.getElementById("first");
+			document.removeEventListener("keydown", this, false);//エンターキーでイベント
+			// document.getElementById("first").style.display = "none";
+			// document.getElementById("videobox").style.display = "block";
+			Mute();
+			let element = document.getElementById('bgmcheck');
+			bgmCheck=element.checked;
+			
+			readyTimer = setInterval(function() {
+				startcount.innerHTML = '<p>' + readyTime + "</p>";
+				readyTime--;
+				if (readyTime < 0) {
+					clearInterval(readyTimer);
+					first.style.visibility = "hidden";
+					document.getElementById("first").style.display = "none";
+					document.getElementById("count_disp").style.display = "block";
+					gameStart();
+				}
+				
+				if (readyTime < 3) {
+					document.getElementById("sound-s").play();
+				}
+			}, 1000);
+		}
+
+		//ゲームスタート時の初期化処理
+		function gameStart() {
+			video_disp.style.display = "block";
+			score = 0;
+			correct = 0;
+			questionDisplay();
+			inputForm.name.value = '';
+			inputForm.name.focus();　//入力フォームにフォーカス
+			document.getElementById("bgm").play(); //BGM再生
+			startTimer();
+		}
+
+		//問題表示
+		function questionDisplay() {
+			
+			const add = questionArray[num].address; //動画のパス取得
+			console.log(add);
+			let video = document.getElementById("video_place");
+			video.src = add;
+			scoreDisp.innerHTML = "スコア:"+score; //スコア表示
+			
+			checkPartTimer();
+			if(movTime==0){
+				let media = document.getElementById("video_place");
+				movTime = media.duration;
+				console.log(movTime);
+				scount = 3;
+				partTime = parseInt(movTime) * scount;
+				console.log(partTime);	
+			}
+			
+			inputForm.name.value = '';
+			inputForm.name.focus(); //入力フォームにフォーカス
+			
+			startPartTimer();
+		}
+		
+		//動画の時間取得
+		function checkPartTimer(){
+			let media = document.getElementById("video_place");
+			setTimer = setInterval(function(){
+				if(media.readyState>0){
+					movTime = media.duration;
+					console.log(movTime);
+					scount = 3;
+					partTime = parseInt(movTime) * scount;
+					console.log(partTime);	
+					clearInterval(setTimer);
+					maxPartTime = partTime;
+				}
+			}, 300);
+			
+		}
+
+		//全体計測タイマー始動
+		function startTimer() {
+			remaining = time;
+			gameTimer = setInterval(function() {
+				count.innerHTML = remaining + "秒";
+				remaining--;
+				let bgmElement = document.getElementById("bgm");
+				if (remaining < 30){
+					bgmElement.playbackRate = 1.5;
+				} else {
+					bgmElement.playbackRate = 1.0;
+				}
+				
+				if (remaining < 0) {
+					clearInterval(gameTimer);
+					end();
+				}
+			}, 1000)
+		}
+
+		//全体計測タイマー停止
+		function stopTimer() {
+			clearInterval(gameTimer);
+		}
+
+		//問題個別計測タイマー始動
+		function startPartTimer() {
+			
+			partTimer = setInterval(function() {
+				// partcount.innerHTML = "次の問題まで" + partTime + "秒";
+				// partcount.innerHTML ="<progress value="+ partTime+" max="+ maxPartTime+"></progress>";
+				partcount.innerHTML = "<meter min=0 value="+ partTime +" max="+ movTime*3 +" low="+ movTime +" high="+ movTime*2 +" optimum="+ movTime*3 +"></meter>";
+				partTime--;
+				if (remaining > 0) {
+					if (partTime < 0) {
+						clearInterval(partTimer);
+						check();
+					}
+				}
+			}, 1000)
+		}
+
+		//問題個別計測タイマー停止
+		function stopPartTimer() {
+			clearInterval(partTimer);
+		}
+
+		//解答時の確認
+		function check() {
+			disabledTrue();
+			var qname = questionArray[num].yomi; //出題問題の答え
+			stopPartTimer(); //問題個別計測タイマーリセット
+			if (inputForm.name.value === qname) { //正解時
+				showCorrect();
+				correct++; //正解数加算
+				score+=10*Math.ceil(partTime*60/parseInt(movTime)); //スコア加算
+				
+				inputArray[num] = inputForm.name.value;
+				correctArray[num] = "○";
+				checkFlg = true;
+				if (num < 131) { //用意された問題数に達したかどうか
+					num++;
+				} else {
+					end();
+				}
+				addTime = (partTime / 60) * 10; //追加時間の計算
+				console.log(addTime);
+				time = remaining + Math.floor(addTime);
+				stopTimer(); //一度全体時間を停止
+				startTimer(); //追加時間を全体時間に加えて再始動
+				if (Math.floor(addTime)>0) {
+					addDisp.innerHTML =  "+" + Math.floor(addTime);
+					showAdd();
+				}
+				questionDisplay(); //問題表示画面へ
+			} else { //誤答時
+				showMiss();
+				inputArray[num] = inputForm.name.value;
+				correctArray[num] = "×";
+				if (num < 131) {
+					num++;
+				} else {
+					end();
+				}
+				questionDisplay();
+			}
+			scoreDisp.innerHTML = "スコア:"+score; //スコア表示
+		}
+
+		//○を表示
+		function showCorrect() {
+			document.getElementById("sound-1").play();
+			document.getElementById("correctDisp").style.display = "block";
+			timerId = setTimeout(closeCorrect, 1000);
+		}
+
+		//○を非表示
+		function closeCorrect() {
+			document.getElementById("correctDisp").style.display = "none";
+			clearTimeout(timerId);
+		}
+
+		//×を表示
+		function showMiss() {
+			document.getElementById("sound-2").play();
+			document.getElementById("missDisp").style.display = "block";
+			timerId = setTimeout(closeMiss, 1000);
+		}
+
+		//×を非表示
+		function closeMiss() {
+			document.getElementById("missDisp").style.display = "none";
+			clearTimeout(timerId);
+		}
+		
+		//追加時間を表示
+		function showAdd() {
+			document.getElementById("addDisp").style.display = "block";
+			document.getElementById("addDisp").className = "fadeUp";
+			timerId2 = setTimeout(closeAdd, 1000);
+		}
+
+		//追加時間を非表示
+		function closeAdd() {
+			document.getElementById("addDisp").style.display = "none";
+			document.getElementById("addDisp").className = "";
+			clearTimeout(timerId2);
+		}
+		
+		//入力フォームを無効化
+		function disabledTrue() {
+			input = document.getElementById('inputtarget');
+			input.disabled = true;
+			timerId3 = setTimeout(disabledFalse, 1000);
+		}
+
+		//入力フォームを有効化
+		function disabledFalse() {
+			input = document.getElementById('inputtarget');
+			input.disabled = false;
+			inputForm.name.value = '';
+			inputForm.name.focus();
+			clearTimeout(timerId3);
+		}
+
+		//終了時の処理
+		function end() {
+			document.getElementById("sound-e").play();
+			document.getElementById("bgm").pause(); //BGM停止
+			
+			inputArray[num] = "（未回答）";
+			correctArray[num] = "-";
+			num++;
+			
+			video_disp.style.display = "none";
+			count_disp.style.display = "none";
+			const post1 = document.getElementById('correctArray'); //○か×
+			post1.value = correctArray;
+			const post2 = document.getElementById('inputArray'); //入力された文
+			post2.value = inputArray;
+			const post3 = document.getElementById('correctCount'); //正解数
+			post3.value = correct;
+			const post4 = document.getElementById('scoreCount'); //スコア
+			post4.value = score;
+			const post5 = document.getElementById('numCount'); //出題問題数
+			post5.value = num;
+			const post6 = document.getElementById('bgmOption'); //BGM設定
+			post6.value = bgmCheck;
+			console.log(post1.value);
+			console.log(post2.value);
+			console.log(post3.value);
+			document.getElementById("finbutton").click();//自動でボタンクリック
+		}
+
+	</script>
+	<div id="main">
+		<div id="first">
+			<p>
+				エンターキーでスタート<br> 答えはひらがなで入力してね
+			</p>
+			<label><input type="checkbox" id="bgmcheck" checked>♫BGM：MusMus</label>
+			
+			<!-- <input type="radio" name="bgmselect" value="ON" onclick="disableMute()" checked>ON -->
+			<!-- <input type="radio" name="bgmselect" value="OFF" onclick="enableMute()">OFF -->
+
+			<!--  input type="button" id="start_button" value="start" onclick="ready()" class="button"> <br / -->
+			<a class="button" th:href="@{/}">メニューに戻る</a>
+		</div>
+		<div id="count_disp" style="display: none;">
+			<div id="countscore">
+				<span id="count"></span> <span id="scoreDisp"></span>
+			</div>
+			<div id="addDisp" style="display: none;"></div>
+			<div id="videobox" style="">
+				<div id="video_disp" style="display: none;">
+					<video id="video_place" th:src="@{images/entry/aiti.mp4}"
+						width=640px autoplay loop muted></video>
+					<div id="partcount"></div>
+				</div>
+
+				<div id="correctDisp" style="display: none;">
+					<audio id="sound-1" preload="auto">
+						<source src="sounds/クイズ・正解02.mp3" type="audio/mp3">
+					</audio>
+					<span class="mock_bold">○</span>
+				</div>
+				<div id="missDisp" style="display: none;">
+					<audio id="sound-2" preload="auto">
+						<source src="sounds/クイズ・間違い02.mp3" type="audio/mp3">
+					</audio>
+					×
+				</div>
+			</div>
+
+			<form name="inputForm" onsubmit="check(); return false;"
+				autocomplete="off">
+				<input type="text" name="name" id="inputtarget"
+					pattern="[\u3041-\u3096 \u30FC]*" autofocus>
+			</form>
+
+		</div>
+
+		<div id="fin_field" style="display: none;">
+			<!--<p>終了！ 結果画面へ</p><br / -->
+			<form action="answer" method="POST">
+				<input type="hidden" id="correctArray" name="answerList" value="">
+				<input type="hidden" id="inputArray" name="inputList" value="">
+				<input type="hidden" id="correctCount" name="correctCount" value="">
+				<input type="hidden" id="scoreCount" name="scoreCount" value="">
+				<input type="hidden" id="numCount" name="numCount" value="">
+				<input type="hidden" id="bgmOption" name="bgmOption" value="">
+				<input type="submit" id="finbutton" value="">
+			</form>
+		</div>
+	</div>
+
+	<audio id="sound-s" preload="auto">
+		<source src="sounds/カウントダウン電子音.mp3" type="audio/mp3">
+	</audio>
+
+	<audio id="bgm" preload="auto" loop>
+		<source src="sounds/MusMus-BGM-087.mp3" type="audio/mp3">
+	</audio>
+
+	<audio id="sound-e" preload="auto">
+		<source src="sounds/ホイッスル・連続.mp3" type="audio/mp3">
+	</audio>
+
+	<footer>
+		<p>&copy; Well-being Gadget Laboratory</p>
+	</footer>
+
+	<script type="text/javascript" th:inline="javascript">
+	
+		let bg = document.getElementById("bgm");
+		let st = document.getElementById("sound-s");
+		let co = document.getElementById("sound-1");
+		let mi = document.getElementById("sound-2");
+		
+		function Mute(){
+			let element = document.getElementById('bgmcheck');
+			console.log(element.checked);
+			if(element.checked){
+				bg.muted = false;
+			  	st.muted = false;
+			 	co.muted = false;
+			 	mi.muted = false;
+			 	bgmCheck=false;
+			}else{
+				bg.muted = true;
+			 	st.muted = true;
+			 	co.muted = true;
+			 	mi.muted = true;
+			 	bgmCheck=true;
+			}
+		}
+		
+	</script>
+</body>
+</html>

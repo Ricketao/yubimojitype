@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title th:text="${title}"></title>
+<link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+</head>
+<body id="rule">
+	<header>
+		<h1 th:text="${title}"></h1>
+	</header>
+	<p>
+	<ul>
+		<li>このゲームは流れてくる<b>指文字</b>の映像を読み取りタイピングするゲームです<br>※指文字は、手の形で五十音を表すものです</li>
+		<li>指文字で単語を表した映像が出てきます。その単語を入力して答えよう</li>
+		<li>解答は<b>「ひらがな」</b>で入力してください</li>
+		<li>全体の時間制限は<b>90秒</b></li>
+		<li>1問ごとにも制限時間があり、早く正解すればするほど、全体の制限時間が延びていきます</li>
+		<li>分からないときは、何も入力せずエンターキーを押すとパスできます</li>
+		<li>多くの問題に答えて、高いスコアを目指そう！</li>
+		<li>まずは<b>初級</b>がオススメ<br>上級は、初級よりも単語の文字数が多くなり難しくなります<br>（上級は準備中）
+		</li>
+	</ul>
+	<a class="button" th:href="@{/}">メニューに戻る</a>
+	<footer>
+		<p>&copy; Well-being Gadget Laboratory</p>
+	</footer>
+</body>
+</html>

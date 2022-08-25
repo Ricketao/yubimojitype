@@ -1,0 +1,635 @@
+@charset "UTF-8";
+
+@import
+	url('https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap')
+	;
+
+/*----- common -----*/
+body {
+	font-family: 'メイリオ';
+	/* font-family: 'Yusei Magic', sans-serif; */
+	/* font-family: 'Yusei Magic', sans-serif; */
+	/* font-family: 'Yusei Magic', sans-serif; */
+	/* font-family: 'Yusei Magic', sans-serif; */
+	/* font-family: 'Yusei Magic', sans-serif; */
+	/* font-family: 'Yusei Magic', sans-serif; */
+	/* font-family: 'Yusei Magic', sans-serif; */
+	/* font-family: 'Yusei Magic', sans-serif; */
+	/* font-family: 'Yusei Magic', sans-serif; */
+	/* font-family: 'Yusei Magic', sans-serif; */
+	/* font-family: 'Yusei Magic', sans-serif; */
+	/* font-family: 'Yusei Magic', sans-serif; */
+	/* font-family: 'Yusei Magic', sans-serif; */
+	width: 720px;
+	margin: 0 auto;
+	background-color: #87cefa;
+}
+
+header {
+	background-color: white;
+}
+
+h1, p {
+	text-align: center;
+}
+
+p {
+	font-size: 2.5em;
+	background-color: #FFFFFF;
+}
+
+p.red {
+	color: #FF0000;
+}
+
+footer {
+	clear: both;
+}
+
+footer p {
+	font-size: 1em;
+}
+
+.button {
+	text-align: center;
+	display: block;
+	padding: 20px 0;
+	margin: 20px auto 0;
+	width: 200px;
+	height: 25px;
+	background-color: #ffb6c1;
+	border: solid;
+	border-radius: 8px;
+	border-color: #FFFFFF;
+	text-decoration: none
+}
+
+.video {
+	position: relative;
+	padding-top: calc(9/ 16 * 100%);
+}
+
+/*----- index.html -----*/
+#title a {
+	text-decoration: none;
+}
+
+.grid {
+	display: grid;
+	gap: 26px;
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	margin-top: 6%;
+	margin-bottom: 50px;
+}
+
+.item {
+	height: 160px;
+}
+
+.menu-text {
+	font-size: 1.5em;
+	position: relative;
+	top: 80px;
+	left: 100px;
+}
+
+.item a {
+	height: 100%;
+}
+
+.title-btn {
+	background-image: url("../images/menu/menubtn.png");
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position-x: center;
+}
+
+.title-btn:hover {
+	background-image: url("../images/menu/menubtnh.png");
+}
+
+/*----- rule.html -----*/
+#rule ul {
+	background: white;
+}
+
+#rule ul li {
+	font-size: 1.25em;
+}
+
+/*----- entry.html -----*/
+#main {
+	background-color: #EEEEEE;
+	width: 700px;
+	height: 480px;
+	margin: 0 auto;
+}
+
+#first, #fin_field {
+	position: relative;
+	height: 100%;
+}
+
+#first p, #fin_field p {
+	position: absolute;
+	width: 90%;
+	background-color: #FEFEFE;
+	margin: 20% 5%;
+}
+
+#first a {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: auto auto 0;
+}
+
+meter {
+	display: block;
+	height: 30px;
+	width: 100%;
+	padding: 0;
+	margin: 0 auto;
+}
+
+#countscore {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
+#scoreDisp {
+	text-align: center;
+}
+
+#count {
+	text-align: center;
+}
+
+#partcount {
+	
+}
+
+#videobox {
+	position: relative; background-color : #FFFFFF;
+	width: 640px;
+	height: 400px;
+	margin: auto;
+	background-color: #FFFFFF;
+}
+
+#correctDisp, #missDisp {
+	position: absolute;
+	width: 100%;
+	top: 15%; color : red;
+	font-size: 200px;
+	text-align: center;
+	font-weight: bolder;
+	background: rgba(0, 0, 0, 0);
+	color: red;
+}
+
+.mock_bold{
+  text-shadow: 
+    5px 5px 0, 
+    5px 5px 0px,
+    5px 5px 0,
+    5px 5px 0px,
+    5px 0px 0px,
+    0px 5px 0px,
+    5px 0px 0px,
+    0px 5px 0px;
+  letter-spacing: 1px;
+}
+
+#addDisp {
+	position: absolute;
+	left: 525px;
+	top:87px;
+	color : red;
+	font-size: 20px;
+	text-align: center;
+	font-weight: bolder;
+	background: rgba(0, 0, 0, 0);
+	color: red;
+}
+
+.fadeUp {
+	animation-name: fadeUpAnime;
+	animation-duration: 0.5s;
+	animation-fill-mode: forwards;
+	opacity: 0;
+}
+
+@keyframes fadeUpAnime {
+	from { 
+		opacity:0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.box {
+	background-color: #FFFFFF;
+	width: 640px;
+	height: 360px;
+	margin: auto;
+	position: relative;
+}
+
+.box p {
+	position: absolute;
+	/* top: 25%;
+	left: 50%;
+	 transform: translate(-50%, -25%); */
+	width: 100%;
+}
+
+#inputForm {
+	margin: 0 auto;
+}
+
+input[type="text"] {
+	width: 98%;
+	font-size: 2.0em;
+}
+
+table {
+	border-collapse: collapse;
+	margin: auto;
+}
+
+table.yubimoji {
+	width: 680px;
+}
+
+table, th, td {
+	border: 2px solid #333333;
+	background-color: #EEEEEE;
+}
+
+.toggle_input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.toggle_label {
+  width: 75px;
+  height: 35px;
+  background: #ccc;
+  position: relative;
+  display: inline-block;
+  border-radius: 40px;
+  transition: 0.4s;
+  box-sizing: border-box;
+}
+
+.toggle_label:after {
+  content: "";
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  background: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  transition: 0.4s;
+}
+
+.toggle_input:checked + .toggle_label {
+  background-color: #4BD865;
+}
+
+.toggle_input:checked + .toggle_label:after {
+  left: 40px;
+}
+
+.toggle_button {
+  position: relative;
+  width: 75px;
+  height: 35px;
+  margin: auto;
+}
+
+/*----- results.html -----*/
+#results table {
+	border-collapse: collapse;
+	margin: auto;
+	text-align: center;
+}
+
+#results tr td {
+	width: 220px;
+}
+
+#results tr td:nth-child(1) {
+	width: 240px;
+}
+
+#results td.correct {
+	width: 40px;
+}
+
+#results td video {
+	width: 240px;
+}
+
+#results ul {
+	margin: 0;
+	padding: 0;
+	list-style: none
+}
+
+#results li {
+	margin: 0;
+	padding: 0;
+	list-style: none
+}
+
+#resultbuttons {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
+/*----- yubimoji_table.html -----*/
+#yubimoji-table table td {
+	color: #EEEEEE;
+	font-size: 1.5em;
+	width: 140px;
+	height: 70px;
+	background-size: contain;
+	vertical-align: text-top;
+	margin: 2px;
+	padding: 0;
+	border-collapse: separate;
+	font-weight:bold;
+}
+
+#yubimoji-table table td:hover {
+	opacity: 0.5;
+	cursor: pointer;
+}
+
+.fs-letter {
+	position: absolute;
+}
+
+.fs-video {
+	/*	float: left;*/
+	width: 130px;
+	margin: 0;
+	padding: 0;
+	display: none;
+}
+
+.fs-video:hover {
+	display: block;
+}
+
+#fs-a {
+	background-image: url("../images/yubimojiStill/a.png");
+}
+
+#fs-ii {
+	background-image: url("../images/yubimojiStill/i.png");
+}
+
+#fs-u {
+	background-image: url("../images/yubimojiStill/u.png");
+}
+
+#fs-ee {
+	background-image: url("../images/yubimojiStill/e.png");
+}
+
+#fs-o {
+	background-image: url("../images/yubimojiStill/o.png");
+}
+
+#fs-ka {
+	background-image: url("../images/yubimojiStill/ka.png");
+}
+
+#fs-ki {
+	background-image: url("../images/yubimojiStill/ki.png");
+}
+
+#fs-ku {
+	background-image: url("../images/yubimojiStill/ku.png");
+}
+
+#fs-ke {
+	background-image: url("../images/yubimojiStill/ke.png");
+}
+
+#fs-ko {
+	background-image: url("../images/yubimojiStill/ko.png");
+}
+
+#fs-sa {
+	background-image: url("../images/yubimojiStill/sa.png");
+}
+
+#fs-si {
+	background-image: url("../images/yubimojiStill/si.png");
+}
+
+#fs-su {
+	background-image: url("../images/yubimojiStill/su.png");
+}
+
+#fs-se {
+	background-image: url("../images/yubimojiStill/se.png");
+}
+
+#fs-so {
+	background-image: url("../images/yubimojiStill/so.png");
+}
+
+#fs-ta {
+	background-image: url("../images/yubimojiStill/ta.png");
+}
+
+#fs-ti {
+	background-image: url("../images/yubimojiStill/ti.png");
+}
+
+#fs-tu {
+	background-image: url("../images/yubimojiStill/tu.png");
+}
+
+#fs-te {
+	background-image: url("../images/yubimojiStill/te.png");
+}
+
+#fs-to {
+	background-image: url("../images/yubimojiStill/to.png");
+}
+
+#fs-na {
+	background-image: url("../images/yubimojiStill/na.png");
+}
+
+#fs-ni {
+	background-image: url("../images/yubimojiStill/ni.png");
+}
+
+#fs-nu {
+	background-image: url("../images/yubimojiStill/nu.png");
+}
+
+#fs-ne {
+	background-image: url("../images/yubimojiStill/ne.png");
+}
+
+#fs-no {
+	background-image: url("../images/yubimojiStill/no.png");
+}
+
+#fs-ha {
+	background-image: url("../images/yubimojiStill/ha.png");
+}
+
+#fs-hi {
+	background-image: url("../images/yubimojiStill/hi.png");
+}
+
+#fs-hu {
+	background-image: url("../images/yubimojiStill/hu.png");
+}
+
+#fs-he {
+	background-image: url("../images/yubimojiStill/he.png");
+}
+
+#fs-ho {
+	background-image: url("../images/yubimojiStill/ho.png");
+}
+
+#fs-ma {
+	background-image: url("../images/yubimojiStill/ma.png");
+}
+
+#fs-mi {
+	background-image: url("../images/yubimojiStill/mi.png");
+}
+
+#fs-mu {
+	background-image: url("../images/yubimojiStill/mu.png");
+}
+
+#fs-me {
+	background-image: url("../images/yubimojiStill/me.png");
+}
+
+#fs-mo {
+	background-image: url("../images/yubimojiStill/mo.png");
+}
+
+#fs-ya {
+	background-image: url("../images/yubimojiStill/ya.png");
+}
+
+#fs-i {
+	background-image: url("../images/yubimojiStill/yi.png");
+}
+
+#fs-yu {
+	background-image: url("../images/yubimojiStill/yu.png");
+}
+
+#fs-e {
+	background-image: url("../images/yubimojiStill/ye.png");
+}
+
+#fs-yo {
+	background-image: url("../images/yubimojiStill/yo.png");
+}
+
+#fs-ra {
+	background-image: url("../images/yubimojiStill/ra.png");
+}
+
+#fs-ri {
+	background-image: url("../images/yubimojiStill/ri.png");
+}
+
+#fs-ru {
+	background-image: url("../images/yubimojiStill/ru.png");
+}
+
+#fs-re {
+	background-image: url("../images/yubimojiStill/re.png");
+}
+
+#fs-ro {
+	background-image: url("../images/yubimojiStill/ro.png");
+}
+
+#fs-wa {
+	background-image: url("../images/yubimojiStill/wa.png");
+}
+
+#fs-wo {
+	background-image: url("../images/yubimojiStill/wo.png");
+}
+
+#fs-n {
+	background-image: url("../images/yubimojiStill/nn.png");
+}
+
+#fs-bou {
+	background-image: url("../images/yubimojiStill/bou.png");
+}
+
+#fs-gagigugego {
+	background-image: url("../images/yubimojiStill/ga.png");
+}
+
+#fs-papipupepo {
+	background-image: url("../images/yubimojiStill/pa.png");
+}
+
+#fs-lyalyulyo {
+	background-image: url("../images/yubimojiStill/lya.png");
+}
+
+#fs-ltsu {
+	background-image: url("../images/yubimojiStill/ltsu.png");
+}
+
+#bg {
+	position: fixed;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	background: rgba(0, 0, 0, .4);
+}
+
+#photo {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	width: 640px;
+	height: 420px;
+}
+
+.empty {
+	background-color: darkgreen;
+}
